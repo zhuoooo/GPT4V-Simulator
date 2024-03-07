@@ -12,46 +12,48 @@
 
 ```json
 {
-  "briefExplanation": "The image shows a part of a webpage with multiple UI issues such as text overflow, content being hidden, and abnormal text wrapping.",
+  "briefExplanation": "The webpage has multiple layout issues detected, including overflow, ellipsis, newline, block, hidden, and exit-in-Chinese problems.",
   "bug": [
     {
       "type": "overflow",
-      "element": [13, 14, 15, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
-      "reason": "These elements' contents exceed their container bounds."
+      "element": [3, 17, 21],
+      "reason": "Content exceeds the boundary of its container."
     },
     {
       "type": "ellipsis",
-      "element": [29, 30],
-      "reason": "These elements' text is truncated with an ellipsis."
+      "element": [2, 14],
+      "reason": "Content is truncated with an ellipsis."
     },
     {
       "type": "newline",
-      "element": [26, 27, 28],
-      "reason": "These elements have abnormal text wrapping."
+      "element": [6],
+      "reason": "Content is breaking into lines abnormally."
     },
     {
       "type": "block",
-      "element": [20, 21, 22, 23, 24, 25],
-      "reason": "These elements are blocked by other elements, obstructing view."
+      "element": [18],
+      "reason": "Content is overlapped by other elements."
     },
     {
       "type": "hidden",
-      "element": [16, 17, 18, 19],
-      "reason": "These elements' content is not fully visible, indicating a layout issue where content might be hidden."
+      "element": [5, 11],
+      "reason": "Content is not fully visible due to being overlapped or off-screen."
     },
     {
       "type": "exit-in-chinese",
-      "element": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      "reason": "These elements contain Chinese text."
+      "element": [7, 8, 9, 10, 12, 13, 15, 16, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32],
+      "reason": "Content contains Chinese characters."
     }
   ]
 }
+
 
 ```
 
 ### prompt
 
 ```
+
 任务: 查找出文本溢出，相互重叠，内容被隐藏，内容非正常换行，存在中文，内容省略等问题。
 
 ## 超出容器
@@ -101,10 +103,10 @@ type ExitInChineseAction = { type: "exit-in-chinese", element: number[], reason:
 }
 
 ## 指示
-# 你是一个专业的视觉设计师，现在需要你对图片中的页面布局进行一个检查。
+# 你是一个专业的视觉设计师，现在需要你检查页面布局。
+# 注意图像中带有颜色背景的数字标记并不是页面内容的一部分，而是用来辅助标记的。
 # 图片是属于网页的一部分。
-# 将统计到的问题根据 type 归类。
-# 在 json markdown 代码块中输出回答。
+# 只提供一个JSON格式的输出，归类并描述这些布局问题。
 
 ```
 
