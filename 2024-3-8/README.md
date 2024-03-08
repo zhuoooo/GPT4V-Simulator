@@ -12,37 +12,20 @@
 
 ### 测试结果
 
-附带了原图的误判率 （2 / 32）。
+第一次调优：附带了原图的误判率 （4 / 32）上升。
 
 ```json
 {
-  "briefExplanation": "The page layout contains elements with Chinese text",
+  "briefExplanation": "在图片中，存在多个元素包含中文字符",
   "bug": {
     "type": "exit-in-chinese",
-    "element": [1,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,19,20,21,22,24,25,26,27,29,30,31,32,33], // 6 18 28
-    "reason": "The content in these elements is in Chinese"
+    "element": [
+      1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24,
+      25, 26, 27, 29, 30, 31, 32, 33
+    ], // 6 18 21 23 28
+    "reason": "这些内容存在中文"
   }
 }
-
-```
-
-未携带原图的误判率 （5 / 32）。
-
-```json
-{
-  "briefExplanation": "The page contains multiple elements with Chinese text.",
-  "bug": [
-    {
-      "type": "exit-in-chinese",
-      "element": [
-        1, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-        24, 25, 26, 27, 29, 30, 31, 32, 33, 34
-      ], // 2 3 6 23 28 34
-      "reason": "These elements contain Chinese characters."
-    }
-  ]
-}
-
 ```
 
 
@@ -56,8 +39,7 @@
 3. 添 few-shot 案例
 
 ```
-
-任务: 查找出存在中文问题。
+任务: 分析这张图片，识别出存在中文的标记元素。
 
 ## 内容存在中文
 type ExitInChineseAction = { type: "exit-in-chinese", element: number[], reason: string }
@@ -82,10 +64,7 @@ type ExitInChineseAction = { type: "exit-in-chinese", element: number[], reason:
 
 ## 指示
 # 你是一个专业的视觉设计师，现在需要你检查页面布局。
-# 图片一是原图，图片二是添加了辅助视觉标记。
-# 注意图片二中带有颜色背景的数字标记并不是页面内容的一部分，而是用来辅助标记的。
-# 图片是属于网页的一部分。
+# 第一张图片是网页的截图，第二张图片是根据第一张图片中页面元素使用 COCO Annotator进行数字标记。
 # 只提供一个JSON格式的输出，归类并描述这些布局问题。
-
 ```
 
