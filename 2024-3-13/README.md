@@ -40,12 +40,13 @@
 
 
 ```
-任务: 分析网页截图，结合内容和在网页上的位置，将带有 COCO Annotator 标记的元素根据菜单导航栏、筛选器进行分类。
+任务: 分析网页截图，结合内容和在网页上的位置，将带有 COCO Annotator 标记的元素根据菜单导航栏、筛选器进行分类，列表只需要保留前两条的元素编号信息。
 
 type FilterElement = { type: "filter", element: number[], reason: string }
 type MenuElement = { type: 'menu', element: number[], reason: string }
 type ContentElement = { type: 'content', element: number[], reason: string }
-type ElementType = FilterElement | MenuElement | ContentElement
+type ListElement = { type: 'list', element: number[], reason }
+type ElementType = FilterElement | MenuElement | ContentElement | ListElement
 
 ## response format
 {
@@ -76,6 +77,16 @@ type ElementType = FilterElement | MenuElement | ContentElement
     	"reason": "这些元素是页面主要内容"
     }
   ]
+}
+
+{
+	"list": [
+		{
+			"type": "list",
+			"element": [7],
+			"reason": "这些元素是列表中前两条中的内容"
+		}
+	]
 }
 
 ## 指令
